@@ -1,0 +1,32 @@
+package main
+
+// Windows XP Luna selected row: soft blue fill, 1 px border and accent bar.
+
+//gorex:param color #d6e3f7
+var Top vec3
+
+//gorex:param color #c1d2ee
+var Bottom vec3
+
+//gorex:param color #7da2ce
+var Border vec3
+
+//gorex:param color #316ac5
+var Accent vec3
+
+func Fragment(dst vec4, pos vec2) vec4 {
+	s := rectSize()
+	y := clamp(pos.y/max(s.y, 1), 0, 1)
+	c := mix(Top, Bottom, y)
+	e := min(min(pos.x, s.x-pos.x), min(pos.y, s.y-pos.y))
+	if e < 2 {
+		c = vec3(0.95, 0.97, 1.0)
+	}
+	if e < 1 {
+		c = Border
+	}
+	if pos.x < 3 {
+		c = Accent
+	}
+	return vec4(c, 1)
+}

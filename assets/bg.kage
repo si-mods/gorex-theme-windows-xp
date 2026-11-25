@@ -1,0 +1,24 @@
+package main
+
+// Windows XP Luna window background: clean cream-beige (#ece9d8) with a soft
+// sky tint at the top.
+
+var Window vec2
+
+//gorex:param color seed:bgTop
+var Top vec3
+
+//gorex:param color seed:bgMid
+var Mid vec3
+
+//gorex:param color seed:bgBottom
+var Bottom vec3
+
+func Fragment(dst vec4, pos vec2) vec4 {
+	y := clamp(pos.y/max(Window.y, 1), 0, 1)
+	c := mix(Top, Mid, clamp(y/0.18, 0, 1))
+	if y > 0.18 {
+		c = mix(Mid, Bottom, clamp((y-0.18)/0.82, 0, 1))
+	}
+	return vec4(c, 1)
+}

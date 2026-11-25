@@ -1,0 +1,42 @@
+package main
+
+// Windows XP Luna dropdown button: soft blue gradient with light inner bevel
+// and #8dafd9 border.
+
+var State vec4
+
+func sdRBox(p, b vec2, r float) float {
+	q := abs(p) - b + r
+	return length(max(q, 0)) + min(max(q.x, q.y), 0) - r
+}
+
+func Fragment(dst vec4, pos vec2) vec4 {
+	s := rectSize()
+	half := s * 0.5
+	d := sdRBox(pos-half, half-0.5, 2.0)
+	if d > 0.5 {
+		return vec4(0, 0, 0, 0)
+	}
+
+	y := clamp(pos.y/max(s.y, 1), 0, 1)
+	top := vec3(0.863, 0.910, 0.988) // #dce8fc
+	bot := vec3(0.663, 0.773, 0.949) // #a9c5f2
+	if State.y > 0.5 {
+		top = vec3(0.659, 0.769, 0.945)
+		bot = vec3(0.808, 0.875, 0.976)
+	} else if State.x > 0.5 {
+		top = vec3(0.914, 0.949, 1.0)
+		bot = vec3(0.753, 0.843, 0.984)
+	}
+	c := mix(top, bot, y)
+
+	// Inner light bevel
+	if d > -1.8 && d <= -0.8 {
+		c = mix(c, vec3(1, 1, 1), 0.55)
+	}
+	// Outer border (#8dafd9)
+	if d > -0.8 {
+		c = vec3(0.553, 0.686, 0.851)
+	}
+	return vec4(c, 1)
+}

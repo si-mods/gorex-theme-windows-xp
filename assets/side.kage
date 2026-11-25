@@ -1,0 +1,15 @@
+package main
+
+// Windows XP Explorer task-pane sidebar: soft periwinkle-blue gradient.
+
+//gorex:param color #eef3fc
+var Left vec3
+
+//gorex:param color #d6dff7
+var Right vec3
+
+func Fragment(dst vec4, pos vec2) vec4 {
+	x := clamp(pos.x/max(rectSize().x, 1), 0, 1)
+	c := mix(Left, Right, x*x)
+	return vec4(c, 1)
+}

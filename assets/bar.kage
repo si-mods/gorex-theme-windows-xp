@@ -1,0 +1,27 @@
+package main
+
+// Windows XP Luna title bar: glossy royal blue with bright top highlight
+// and deep blue bottom edge.
+
+//gorex:param color seed:accent
+var Base vec3
+
+//gorex:param color #003c9d
+var Bottom vec3
+
+func Fragment(dst vec4, pos vec2) vec4 {
+	h := max(rectSize().y, 1)
+	y := pos.y / h
+	top := mix(Base, vec3(0.45, 0.72, 1.0), 0.14)
+	c := mix(top, Base, clamp(y/0.35, 0, 1))
+	if y > 0.35 {
+		c = mix(Base, Bottom, clamp((y-0.35)/0.65, 0, 1))
+	}
+	if pos.y < 1 {
+		c = vec3(0.45, 0.72, 1.0)
+	}
+	if h-pos.y < 1 {
+		c = vec3(0.0, 0.19, 0.56)
+	}
+	return vec4(c, 1)
+}

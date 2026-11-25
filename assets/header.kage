@@ -1,0 +1,21 @@
+package main
+
+// Windows XP Luna pane header: white-to-beige gradient with a #aca899 bottom line.
+
+//gorex:param color #ffffff
+var Top vec3
+
+//gorex:param color #ece9d8
+var Bottom vec3
+
+//gorex:param color #aca899
+var Line vec3
+
+func Fragment(dst vec4, pos vec2) vec4 {
+	s := rectSize()
+	c := mix(Top, Bottom, clamp(pos.y/max(s.y, 1), 0, 1))
+	if s.y-pos.y < 1 {
+		c = Line
+	}
+	return vec4(c, 1)
+}

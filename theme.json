@@ -1,0 +1,153 @@
+{
+  "name": "Windows XP",
+  "description": "Windows XP Luna chrome: glossy blue title bar, XP buttons with focus/hover rings, Luna dropdowns and window controls.",
+  "seeds": {
+    "light": {
+      "bgTop": "#dce8f8",
+      "bgMid": "#ece9d8",
+      "bgLow": "#ece9d8",
+      "bgBottom": "#e2decb",
+      "bgTint": "#73b9ed14",
+      "text": "#000000",
+      "textMuted": "#57554b",
+      "textFaint": "#757367",
+      "iconMuted": "#4d6185",
+      "emptyMark": "#7f9db9",
+      "busy": "#3c9a3f",
+      "attention": "#e59700",
+      "done": "#245edb",
+      "exited": "#8c897d",
+      "danger": "#d6431c",
+      "accent": "#245edb",
+      "accentHover": "#3672ee",
+      "accentPressed": "#1a47b0",
+      "accentText": "#ffffff",
+      "panel": "#ece9d8",
+      "field": "#ffffff",
+      "fieldBorder": "#7f9db9",
+      "surface": "#f3f2ed",
+      "surfaceHover": "#fcfbf7",
+      "surfacePressed": "#e2e0d5",
+      "card": "#ffffff",
+      "cardFocused": "#ffffff",
+      "shadow": "#003c741f",
+      "shadowFocused": "#003c7433",
+      "backdrop": "#001b3d14",
+      "pillTint": "#245edb33"
+    },
+    "dark": {
+      "bgTop": "#dce8f8",
+      "bgMid": "#ece9d8",
+      "bgLow": "#ece9d8",
+      "bgBottom": "#e2decb",
+      "bgTint": "#73b9ed14",
+      "text": "#000000",
+      "textMuted": "#57554b",
+      "textFaint": "#757367",
+      "iconMuted": "#4d6185",
+      "emptyMark": "#7f9db9",
+      "busy": "#3c9a3f",
+      "attention": "#e59700",
+      "done": "#245edb",
+      "exited": "#8c897d",
+      "danger": "#d6431c",
+      "accent": "#245edb",
+      "accentHover": "#3672ee",
+      "accentPressed": "#1a47b0",
+      "accentText": "#ffffff",
+      "panel": "#ece9d8",
+      "field": "#ffffff",
+      "fieldBorder": "#7f9db9",
+      "surface": "#f3f2ed",
+      "surfaceHover": "#fcfbf7",
+      "surfacePressed": "#e2e0d5",
+      "card": "#ffffff",
+      "cardFocused": "#ffffff",
+      "shadow": "#003c741f",
+      "shadowFocused": "#003c7433",
+      "backdrop": "#001b3d14",
+      "pillTint": "#245edb33"
+    }
+  },
+  "roles": {
+    "titleBar.background": "#0055e5",
+    "sideBar.background": "#d6dff7",
+    "paneHeader.background": "#ece9d8",
+    "sideBar.tabActiveBackground": "#c1d2ee",
+    "pane.border": "#0055e580",
+    "button.background": "#f3f2ed",
+    "dropdown.background": "#c4d7f7",
+    "windowControl.background": "#2876c8",
+    "windowControl.closeBackground": "#b82f0f",
+    "sideBar.activeGroupTabBackground": "#c1d2ee",
+    "sideBar.activeGroupBackground": "#245edb14"
+  },
+  "terminal": {
+    "light": "Lumina Rayleigh Light",
+    "dark": "Lumina Rayleigh Light"
+  },
+  "assets": {
+    "bg": "bg.kage",
+    "bar": "bar.kage",
+    "side": "side.kage",
+    "row": "row.kage",
+    "header": "header.kage",
+    "button": "button.kage",
+    "dropdown": "dropdown.kage",
+    "winctrl": "winctrl.kage"
+  },
+  "shaders": {
+    "api": 2,
+    "background": {
+      "source": "bg"
+    },
+    "faces": {
+      "titleBar.background": {
+        "source": "bar"
+      },
+      "sideBar.background": {
+        "source": "side"
+      },
+      "sideBar.tabActiveBackground": {
+        "source": "row"
+      },
+      "paneHeader.background": {
+        "source": "header"
+      },
+      "sideBar.activeGroupTabBackground": {
+        "source": "row"
+      },
+      "button.background": {
+        "source": "button"
+      },
+      "dropdown.background": {
+        "source": "dropdown"
+      },
+      "windowControl.background": {
+        "source": "winctrl",
+        "params": {
+          "Base": "#1244ad"
+        }
+      },
+      "windowControl.closeBackground": {
+        "source": "winctrl",
+        "params": {
+          "Base": "#9e2408"
+        }
+      }
+    }
+  },
+  "metrics": {
+    "radius": 0.2,
+    "border": 1,
+    "font": [
+      "Tahoma",
+      "Segoe UI",
+      "system"
+    ],
+    "shadow": {
+      "scale": 0.5
+    }
+  },
+  "glass": false
+}
