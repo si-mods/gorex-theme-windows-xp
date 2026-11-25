@@ -35,41 +35,29 @@ func Fragment(dst vec4, pos vec2) vec4 {
 
 	var c vec3
 	if State.y > 0.5 {
-		// Pressed: slightly darker warm gray with top inner shadow
-		top := vec3(0.820, 0.812, 0.769) // #d1cfc4
-		mid := vec3(0.898, 0.894, 0.863) // #e5e4dc
-		bot := vec3(0.925, 0.922, 0.886) // #ecebe2
-		c = mix(top, mid, clamp(y/0.35, 0, 1))
-		if y > 0.35 {
-			c = mix(mid, bot, clamp((y-0.35)/0.65, 0, 1))
-		}
+		// Pressed: #e5e4dd -> #e0e0d7
+		top := vec3(0.898, 0.894, 0.867)
+		bot := vec3(0.878, 0.878, 0.843)
+		c = mix(top, bot, y)
 	} else {
-		// Normal / Hover / Focus
+		// Normal / Hover / Focus: #ffffff -> #f0f0ea
 		top := vec3(1.0, 1.0, 1.0)
-		mid := vec3(0.961, 0.957, 0.937) // #f5f4ef
-		bot := vec3(0.847, 0.835, 0.788) // #d8d5c9
-		c = mix(top, mid, clamp(y/0.75, 0, 1))
-		if y > 0.75 {
-			c = mix(mid, bot, clamp((y-0.75)/0.25, 0, 1))
-		}
-		// Hover orange inner ring, or Primary/Focused blue inner ring
-		if d > -2.6 && d <= -0.7 {
-			t := clamp((-0.7 - d) / 1.9, 0, 1)
+		bot := vec3(0.941, 0.941, 0.918)
+		c = mix(top, bot, y)
+		// Hover orange inner ring (#fbca6a), or Primary/Focused blue inner ring (#93b3e7)
+		if d > -2.8 && d <= -0.7 {
+			t := clamp((-0.7 - d) / 2.1, 0, 1)
 			if State.x > 0.5 {
-				outer := vec3(0.973, 0.702, 0.200) // #f8b333
-				inner := vec3(0.988, 0.827, 0.482) // #fcd37b
-				c = mix(c, mix(outer, inner, t), 0.9)
+				c = mix(c, vec3(0.984, 0.792, 0.416), 0.92*(1.0-t*0.2))
 			} else if State.z > 0.5 {
-				outer := vec3(0.412, 0.616, 0.906) // #699de7
-				inner := vec3(0.620, 0.761, 0.969) // #9ec2f7
-				c = mix(c, mix(outer, inner, t), 0.88)
+				c = mix(c, vec3(0.576, 0.702, 0.906), 0.92*(1.0-t*0.2))
 			}
 		}
 	}
 
-	// 1 px outer XP navy border (#003c74)
+	// 1 px outer XP border (#1c5180)
 	if d > -0.7 {
-		c = vec3(0.0, 0.235, 0.455)
+		c = vec3(0.110, 0.318, 0.502)
 	}
 	return vec4(c, 1)
 }
