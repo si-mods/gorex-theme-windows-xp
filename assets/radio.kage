@@ -1,0 +1,48 @@
+package main
+
+var State vec4
+
+func Fragment(dst vec4, pos vec2) vec4 {
+	size := rectSize()
+	center := size * 0.5
+	radius := min(size.x, size.y) * 0.5
+	dist := length(pos - center)
+
+	alpha := 1.0 - smoothstep(radius-0.8, radius+0.2, dist)
+	if alpha <= 0.001 {
+		return vec4(0.0)
+	}
+
+	hovered := State.x > 0.5
+	pressed := State.y > 0.5
+	disabled := State.w > 0.5
+
+	dEdge := radius - dist
+	uv := pos / size
+	t := clamp((uv.x+uv.y)*0.5, 0.0, 1.0)
+
+	var col vec3
+	if disabled {
+		if dEdge < 1.1 {
+			col = vec3(0.792, 0.784, 0.733) // #CAC8BB
+		} else {
+			col = vec3(1.0, 1.0, 1.0)
+		}
+		return vec4(col*alpha, alpha)
+	}
+
+	if dEdge < 1.1 {
+		col = vec3(0.110, 0.318, 0.502) // #1C5180
+		return vec4(col*alpha, alpha)
+	}
+
+	if pressed {
+		col = mix(vec3(0.690, 0.686, 0.635), vec3(0.898, 0.894, 0.855), t)
+	} else {
+		col = mix(vec3(0.863, 0.863, 0.839), vec3(1.0, 1.0, 1.0), t)
+		if hovered && dEdge < 3.1 {
+			col = mix(vec3(0.957, 0.722, 0.243), vec3(0.988, 0.827, 0.467), clamp((dEdge-1.1)/2.0, 0.0, 1.0))
+		}
+	}
+	return vec4(col*alpha, alpha)
+}

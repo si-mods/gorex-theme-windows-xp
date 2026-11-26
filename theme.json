@@ -80,6 +80,15 @@
     "segmented.background": "#fcfcfe",
     "windowControl.background": "#1d56e0",
     "windowControl.closeBackground": "#ba2c0c",
+    "checkbox.background": "#ffffff",
+    "radio.background": "#ffffff",
+    "window.border": "#0055e5",
+    "menu.background": "#ffffff",
+    "menu.border": "#aca899",
+    "scrollbar.track": "#f3f1ec",
+    "scrollbar.thumb": "#c6d8fa",
+    "scrollbar.hover": "#a8c6fa",
+    "scrollbar.active": "#82aaf5",
     "sideBar.activeGroupTabBackground": "#c1d2ee",
     "sideBar.activeGroupBackground": "#245edb14"
   },
@@ -96,7 +105,9 @@
     "button": "button.kage",
     "dropdown": "dropdown.kage",
     "segmented": "segmented.kage",
-    "winctrl": "winctrl.kage"
+    "winctrl": "winctrl.kage",
+    "checkbox": "checkbox.kage",
+    "radio": "radio.kage"
   },
   "shaders": {
     "api": 2,
@@ -127,6 +138,12 @@
       },
       "segmented.background": {
         "source": "segmented"
+      },
+      "checkbox.background": {
+        "source": "checkbox"
+      },
+      "radio.background": {
+        "source": "radio"
       },
       "windowControl.background": {
         "source": "winctrl",
