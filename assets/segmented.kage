@@ -1,0 +1,56 @@
+package main
+
+// Windows XP Luna tab / segmented button (Figma 1:1043):
+// - Top corners rounded (3 px), bottom square
+// - #fcfcfe body, #91a7b4 1 px border
+// - 3 px orange-gold top tip (#ffc73c / #e68b2c) when selected (State.z) or hovered (State.x)
+
+var State vec4
+
+func sdTabBox(pos, s vec2, r float) float {
+	// Round only the top two corners by clamping y >= r for the bottom half.
+	p := pos - s*0.5
+	b := s*0.5 - 0.5
+	rr := r
+	if p.y > 0 {
+		rr = 0
+	}
+	q := abs(p) - b + rr
+	return length(max(q, 0)) + min(max(q.x, q.y), 0) - rr
+}
+
+func Fragment(dst vec4, pos vec2) vec4 {
+	s := rectSize()
+	d := sdTabBox(pos, s, 3.0)
+	alpha := clamp(0.5-d, 0, 1)
+	if alpha <= 0 {
+		return vec4(0, 0, 0, 0)
+	}
+
+	c := vec3(0.988, 0.988, 0.996) // #fcfcfe
+	if State.z <= 0.5 {
+		// Idle / hover: subtle top-left highlight and warm bottom-right bevel
+		if pos.x < 2.2 || pos.y < 2.5 {
+			c = mix(c, vec3(1, 1, 1), 0.7)
+		}
+		if s.y-pos.y < 2.2 || s.x-pos.x < 2.0 {
+			c = mix(c, vec3(0.325, 0.216, 0.0), 0.14)
+		}
+	}
+
+	// #91a7b4 outer border (top, left, right)
+	if d > -0.8 {
+		c = vec3(0.569, 0.655, 0.706)
+	}
+
+	// 3 px orange-gold selection/hover tip (#ffc73c with #e68b2c border)
+	if (State.z > 0.5 || State.x > 0.5) && pos.y < 3.5 {
+		tip := vec3(1.0, 0.780, 0.235) // #ffc73c
+		if d > -0.9 {
+			tip = vec3(0.902, 0.545, 0.173) // #e68b2c
+		}
+		c = tip
+	}
+
+	return vec4(c*alpha, alpha)
+}

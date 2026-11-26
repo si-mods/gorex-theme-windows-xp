@@ -1,12 +1,12 @@
 package main
 
 // Windows XP Luna window control button (minimize, maximize, close):
-// white outer rounded frame, glossy 3D gradient and top-left highlight.
+// anti-aliased white outer rounded frame, glossy gradient and top-left highlight.
 
 var State vec4
 
-// The base button color (blue for min/max, orange-red for close).
-//gorex:param color #1e5cd6
+// The base button color (blue for min/max, coral-red for close).
+//gorex:param color #245ff5
 var Base vec3
 
 func sdRBox(p, b vec2, r float) float {
@@ -17,45 +17,44 @@ func sdRBox(p, b vec2, r float) float {
 func Fragment(dst vec4, pos vec2) vec4 {
 	s := rectSize()
 	half := s * 0.5
-	d := sdRBox(pos-half, half-0.5, 3.0)
-	if d > 0.5 {
+	d := sdRBox(pos-half, half-0.5, 2.5)
+	alpha := clamp(0.5-d, 0, 1)
+	if alpha <= 0 {
 		return vec4(0, 0, 0, 0)
 	}
 
-	// White outer rounded border (1 px)
+	// Crisp 1 px white outer rounded border
 	if d > -0.8 {
-		return vec4(1, 1, 1, 1)
+		return vec4(alpha, alpha, alpha, alpha)
 	}
 
 	uv := clamp(pos/max(s, vec2(1)), 0, 1)
 	diag := clamp((uv.x+uv.y)*0.5, 0, 1)
-	hi := mix(Base, vec3(1, 1, 1), 0.06)
-	lo := Base * 0.65
+	hi := mix(Base, vec3(1, 1, 1), 0.04)
+	lo := Base * 0.68
 	c := mix(hi, Base, clamp(diag/0.55, 0, 1))
 	if diag > 0.55 {
 		c = mix(Base, lo, clamp((diag-0.55)/0.45, 0, 1))
 	}
 
-	// Soft top-left specular dot (away from sample edges)
-	glow := exp(-dot(uv-vec2(0.32, 0.35), uv-vec2(0.32, 0.35)) * 36.0)
-	c = mix(c, vec3(1, 1, 1), glow*0.18)
+	// Soft top-left highlight (centered away from 4,2 edge)
+	glow := exp(-dot(uv-vec2(0.32, 0.36), uv-vec2(0.32, 0.36)) * 36.0)
+	c = mix(c, vec3(1, 1, 1), glow*0.09)
 
 	if State.y > 0.5 {
-		// Clicked: deeper gradient + dark top-left inner shadow
 		c = Base * 0.72
 		if pos.x < 3.5 || pos.y < 3.5 {
 			c = c * 0.65
 		}
 	} else if State.x > 0.5 {
-		// Hover: brighter + bottom-right glow
 		c = mix(c, vec3(1, 1, 1), 0.22)
 		br := exp(-dot(uv-vec2(0.8, 0.8), uv-vec2(0.8, 0.8)) * 12.0)
 		c = mix(c, mix(Base, vec3(1, 1, 1), 0.45), br*0.45)
 	}
 
-	// Subtle dark inner rim
-	if d > -1.8 {
-		c = mix(c, Base*0.45, 0.45)
+	// Subtle inner rim
+	if d > -1.6 {
+		c = mix(c, Base*0.55, 0.35)
 	}
-	return vec4(c, 1)
+	return vec4(c*alpha, alpha)
 }

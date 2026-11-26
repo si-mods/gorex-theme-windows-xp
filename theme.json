@@ -77,8 +77,9 @@
     "pane.border": "#0055e580",
     "button.background": "#f3f2ed",
     "dropdown.background": "#c4d7f7",
-    "windowControl.background": "#2876c8",
-    "windowControl.closeBackground": "#b82f0f",
+    "segmented.background": "#fcfcfe",
+    "windowControl.background": "#1d56e0",
+    "windowControl.closeBackground": "#ba2c0c",
     "sideBar.activeGroupTabBackground": "#c1d2ee",
     "sideBar.activeGroupBackground": "#245edb14"
   },
@@ -94,6 +95,7 @@
     "header": "header.kage",
     "button": "button.kage",
     "dropdown": "dropdown.kage",
+    "segmented": "segmented.kage",
     "winctrl": "winctrl.kage"
   },
   "shaders": {
@@ -123,16 +125,19 @@
       "dropdown.background": {
         "source": "dropdown"
       },
+      "segmented.background": {
+        "source": "segmented"
+      },
       "windowControl.background": {
         "source": "winctrl",
         "params": {
-          "Base": "#1244ad"
+          "Base": "#1d56e0"
         }
       },
       "windowControl.closeBackground": {
         "source": "winctrl",
         "params": {
-          "Base": "#9e2408"
+          "Base": "#ba2c0c"
         }
       }
     }
