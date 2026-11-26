@@ -35,15 +35,26 @@ func Fragment(dst vec4, pos vec2) vec4 {
 
 	var c vec3
 	if State.y > 0.5 {
-		// Pressed: #e5e4dd -> #e0e0d7
+		// Pressed: #e5e4dd -> #e0e0d7 with top-left warm inner shadow
 		top := vec3(0.898, 0.894, 0.867)
 		bot := vec3(0.878, 0.878, 0.843)
 		c = mix(top, bot, y)
+		if pos.x < 3.0 || pos.y < 3.5 {
+			c = mix(c, vec3(0.325, 0.216, 0.0), 0.16)
+		}
 	} else {
 		// Normal / Hover / Focus: #ffffff -> #f0f0ea
 		top := vec3(1.0, 1.0, 1.0)
 		bot := vec3(0.941, 0.941, 0.918)
 		c = mix(top, bot, y)
+		// Bottom-right warm bevel shadow (rgba(83,55,0,0.2)) and top-left white highlight
+		if s.y-pos.y < 3.0 || s.x-pos.x < 2.2 {
+			t := max(clamp((3.0-(s.y-pos.y))/2.3, 0, 1), clamp((2.2-(s.x-pos.x))/1.5, 0, 1))
+			c = mix(c, vec3(0.325, 0.216, 0.0), 0.20*t)
+		}
+		if pos.x < 2.5 || pos.y < 2.5 {
+			c = mix(c, vec3(1.0, 1.0, 1.0), 0.75)
+		}
 		// Hover orange inner ring (#fbca6a), or Primary/Focused blue inner ring (#93b3e7)
 		if d > -2.8 && d <= -0.7 {
 			t := clamp((-0.7 - d) / 2.1, 0, 1)
